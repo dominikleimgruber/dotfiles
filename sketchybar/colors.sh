@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-# Color Palette
+# Catppuccin Macchiato palette, as used by the carbonfiber reference.
 BLACK=0xff181926
 WHITE=0xffcad3f5
 RED=0xffed8796
@@ -12,15 +12,8 @@ MAGENTA=0xffc6a0f6
 GREY=0xff939ab7
 TRANSPARENT=0x00000000
 
-# General bar colors
-BAR_COLOR=0xcc24273a #$GREY # Grey bar
-ICON_COLOR=$WHITE # Color of all icons
-LABEL_COLOR=$WHITE # Color of all labels
-
-POPUP_BACKGROUND_COLOR=$BLACK
-POPUP_BORDER_COLOR=$WHITE
-
-SHADOW_COLOR=$BLACK
-
-# Item specific special colors
-SPOTIFY_GREEN=$GREEN
+# Bar / chrome
+BAR_COLOR=0xcc181926        # dark Catppuccin base, slightly translucent over the blur
+HIGHLIGHT=0x44ffffff        # active workspace pill
+DIM=0xff5b6078            # empty workspace number
+POPUP_BG=0x70000000
