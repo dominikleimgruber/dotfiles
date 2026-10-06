@@ -15,7 +15,7 @@ Built and tested on macOS (Darwin 27) on Apple Silicon.
 | `starship/starship.toml` | `~/.config/starship.toml` | [Starship](https://starship.rs) shell prompt |
 | `wezterm/.wezterm.lua` | `~/.wezterm.lua` | WezTerm config, kept from before the switch to Ghostty |
 
-These are plain copies, not symlinks — see [Installing](#installing).
+These are symlinked into place — see [Installing](#installing).
 
 ## AeroSpace
 
@@ -137,6 +137,7 @@ default icon font.
 ```sh
 brew tap nikitabobko/tap
 brew tap felixkratz/formulae
+brew trust --formula felixkratz/formulae/sketchybar felixkratz/formulae/borders
 
 # window manager + bar
 brew install --cask aerospace
@@ -147,7 +148,7 @@ brew install --cask font-sf-pro font-sf-mono font-hack-nerd-font
 
 # terminal, prompt, editor
 brew install --cask ghostty
-brew install starship neovim
+brew install starship neovim ripgrep fd   # rg/fd are used by LazyVim pickers
 
 # real device location for the weather item
 brew install --cask corelocationcli
@@ -169,19 +170,16 @@ Two items need macOS permissions that can't be granted from a script:
 
 ## Installing
 
-No symlinks and no bootstrap script — files are copied into place:
+Each config is symlinked from this repo, so edits in `~/.config` land directly in git.
+Back up any existing configs first:
 
 ```sh
-cd ~/Documents/dotfiles
-cp -R aerospace  ~/.config/
-cp -R sketchybar ~/.config/
-cp -R nvim       ~/.config/
-cp starship/starship.toml ~/.config/starship.toml
-cp wezterm/.wezterm.lua   ~/.wezterm.lua
+cd ~/dotfiles
+for t in aerospace sketchybar nvim; do ln -sfn "$PWD/$t" ~/.config/$t; done
+ln -sfn "$PWD/starship/starship.toml" ~/.config/starship.toml
+ln -sfn "$PWD/wezterm/.wezterm.lua"   ~/.wezterm.lua
 
-chmod +x ~/.config/sketchybar/sketchybarrc \
-         ~/.config/sketchybar/plugins/*.sh \
-         ~/.config/sketchybar/plugins/*.py
+chmod +x sketchybar/sketchybarrc sketchybar/plugins/*.sh sketchybar/plugins/*.py
 ```
 
 Then reload:
@@ -195,8 +193,6 @@ sketchybar is started by AeroSpace's `after-startup-command`, not as a brew serv
 so `brew services restart sketchybar` will not bring it back. Run `sketchybar &` or
 restart AeroSpace.
 
-Because these are copies, **editing `~/.config` does not update this repo**. Copy
-changes back before committing.
 
 ## Notes
 
