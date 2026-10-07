@@ -29,6 +29,7 @@ matching nothing are skipped. That makes one config cover every docking state:
 | Laptop + DELL only | DELL U2723QE | MacBook screen |
 | Laptop + M27UP only | MacBook screen | M27UP |
 | Laptop only | MacBook screen | MacBook screen |
+| Office (two HP E27u G4) | HP E27u G4 (2) — main | HP E27u G4 (1) |
 
 Monitor names are matched by regex, so **swapping displays means editing those
 patterns** in `[workspace-to-monitor-force-assignment]`.
@@ -119,7 +120,8 @@ Readings come from [Open-Meteo](https://open-meteo.com) (no API key). Its WMO we
 code plus `is_day` drives the icon, so clear-day and clear-night differ. Location is
 cached 30 min, weather refreshes every 15 min; clicking the item clears the location
 cache and takes a fresh fix. If the network is down it keeps the last good reading
-rather than blanking.
+rather than blanking, and retries every minute until a fetch succeeds (so a reading
+from the previous location doesn't linger after a Wi-Fi change).
 
 `plugins/city_code.py` turns a city name into the short label — initials for multi-part
 names (`New York` → `NY`, capped at 4), first three letters otherwise

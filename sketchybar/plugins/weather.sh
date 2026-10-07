@@ -98,7 +98,8 @@ LON="$(echo "$geo" | awk '{print $2}')"
 CITY="$(echo "$geo" | awk '{print $3}')"
 
 # --- weather --------------------------------------------------------------
-read -r TEMP CODE IS_DAY <<<"$(curl -s --max-time 8 \
+# Retries cover the network still coming up right after wake / a Wi-Fi change.
+read -r TEMP CODE IS_DAY <<<"$(curl -s --max-time 8 --retry 2 --retry-delay 3 --retry-all-errors \
   "https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,weather_code,is_day" \
   | python3 -c '
 import sys, json
@@ -116,6 +117,9 @@ if [ -z "$TEMP" ]; then
   else
     sketchybar --set "$NAME" icon="$WEATHER_NA" label="--"
   fi
+  # The last reading may be for the previous location, so retry soon instead of
+  # leaving it up for the full 15 minutes.
+  sketchybar --set "$NAME" update_freq=60
   exit 0
 fi
 
@@ -143,4 +147,4 @@ else
   LABEL="${TEMP}°"
 fi
 printf '%s %s' "$ICON" "$LABEL" > "$LAST_GOOD"
-sketchybar --set "$NAME" icon="$ICON" label="$LABEL"
+sketchybar --set "$NAME" icon="$ICON" label="$LABEL" update_freq=900

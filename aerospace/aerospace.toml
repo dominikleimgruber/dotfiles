@@ -1,10 +1,13 @@
-after-startup-command = ['exec-and-forget sketchybar', 
-  'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0'
+after-startup-command = [
+  'exec-and-forget sketchybar',
+  'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0',
 ]
 
 # Notify Sketchybar about workspace change
-exec-on-workspace-change = ['/bin/bash', '-c',
-  'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+exec-on-workspace-change = [
+  '/bin/bash',
+  '-c',
+  'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
 ]
 
 # Start AeroSpace at login
@@ -83,14 +86,14 @@ preset = 'qwerty'
 # The default value applies to the 4K externals (DELL U2723QE / M27UP);
 # the ^Built-in.*$ branch applies to the MacBook's own display.
 [gaps]
-inner.horizontal = [{ monitor."^Built-in.*$" = 8 },  12]
-inner.vertical   = [{ monitor."^Built-in.*$" = 8 },  12]
+inner.horizontal = [{ monitor."^Built-in.*$" = 8 }, 12]
+inner.vertical = [{ monitor."^Built-in.*$" = 8 }, 12]
 
 # Top gap leaves room for sketchybar (height 45, y_offset -5).
-outer.top        = [{ monitor."^Built-in.*$" = 15 }, 55]
-outer.bottom     = [{ monitor."^Built-in.*$" = 8 },  12]
-outer.left       = [{ monitor."^Built-in.*$" = 8 },  12]
-outer.right      = [{ monitor."^Built-in.*$" = 8 },  12]
+outer.top = [{ monitor."^Built-in.*$" = 15 }, 55]
+outer.bottom = [{ monitor."^Built-in.*$" = 8 }, 12]
+outer.left = [{ monitor."^Built-in.*$" = 8 }, 12]
+outer.right = [{ monitor."^Built-in.*$" = 8 }, 12]
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -179,7 +182,7 @@ alt-shift-enter = 'mode apps'
 
 # alt-t = 'exec-and-forget open -a /Applications/Telegram.app'
 alt-o = 'exec-and-forget open -a /Applications/Obsidian.app'
-alt-b = 'exec-and-forget open -a "/Applications/Brave Browser.app"'
+alt-b = 'exec-and-forget open -a "/Applications/Firefox.app"'
 alt-s = 'exec-and-forget open -a /Applications/Safari.app'
 alt-q = 'exec-and-forget open -a "/System/Applications/QuickTime Player.app"'
 alt-w = 'exec-and-forget open -a /Applications/Ghostty.app'
@@ -193,7 +196,10 @@ alt-z = 'exec-and-forget open -a /Applications/Zen.app'
 [mode.service.binding]
 esc = ['reload-config', 'mode main']
 r = ['flatten-workspace-tree', 'mode main'] # reset layout
-f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
+f = [
+  'layout floating tiling',
+  'mode main',
+] # Toggle between floating and tiling layout
 backspace = ['close-all-windows-but-current', 'mode main']
 
 [mode.apps.binding]
@@ -210,15 +216,18 @@ alt-w = ['exec-and-forget open -a /Applications/Ghostty.app', 'mode main']
 #   Laptop + M27UP only ->  1-4 on the MacBook screen, 5-8 on M27UP
 #   Laptop only         ->  all 8 on the MacBook screen
 #   Clamshell, both 4Ks ->  1-4 on DELL U2723QE,  5-8 on M27UP
+#   Office, both HPs    ->  1-4 on HP E27u G4 (2), 5-8 on HP E27u G4 (1)
 [workspace-to-monitor-force-assignment]
+# Home: DELL U2723QE + M27UP. Office: two identical HP E27u G4, which macOS
+# disambiguates as (1)/(2); (2) is the main one. If they ever swap, swap them here.
 # Primary group
-1 = ['^DELL U2723QE$', '^Built-in.*$']
-2 = ['^DELL U2723QE$', '^Built-in.*$']
-3 = ['^DELL U2723QE$', '^Built-in.*$']
-4 = ['^DELL U2723QE$', '^Built-in.*$']
+1 = ['^DELL U2723QE$', '^HP E27u G4 \(2\)$', '^Built-in.*$']
+2 = ['^DELL U2723QE$', '^HP E27u G4 \(2\)$', '^Built-in.*$']
+3 = ['^DELL U2723QE$', '^HP E27u G4 \(2\)$', '^Built-in.*$']
+4 = ['^DELL U2723QE$', '^HP E27u G4 \(2\)$', '^Built-in.*$']
 
 # Secondary group
-5 = ['^M27UP$', '^Built-in.*$']
-6 = ['^M27UP$', '^Built-in.*$']
-7 = ['^M27UP$', '^Built-in.*$']
-8 = ['^M27UP$', '^Built-in.*$']
+5 = ['^M27UP$', '^HP E27u G4 \(1\)$', '^Built-in.*$']
+6 = ['^M27UP$', '^HP E27u G4 \(1\)$', '^Built-in.*$']
+7 = ['^M27UP$', '^HP E27u G4 \(1\)$', '^Built-in.*$']
+8 = ['^M27UP$', '^HP E27u G4 \(1\)$', '^Built-in.*$']
