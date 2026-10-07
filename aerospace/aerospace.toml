@@ -211,23 +211,23 @@ alt-w = ['exec-and-forget open -a /Applications/Ghostty.app', 'mode main']
 # matches a currently connected monitor wins. Patterns that match nothing are skipped,
 # so the lists degrade gracefully as monitors come and go:
 #
-#   Laptop + both 4Ks   ->  1-4 on DELL U2723QE,  5-8 on M27UP
-#   Laptop + DELL only  ->  1-4 on DELL U2723QE,  5-8 on the MacBook screen
-#   Laptop + M27UP only ->  1-4 on the MacBook screen, 5-8 on M27UP
+#   Laptop + both 4Ks   ->  1-4 on M27UP,  5-8 on DELL U2723QE
+#   Laptop + M27UP only ->  1-4 on M27UP,  5-8 on the MacBook screen
+#   Laptop + DELL only  ->  1-4 on the MacBook screen, 5-8 on DELL U2723QE
 #   Laptop only         ->  all 8 on the MacBook screen
-#   Clamshell, both 4Ks ->  1-4 on DELL U2723QE,  5-8 on M27UP
+#   Clamshell, both 4Ks ->  1-4 on M27UP,  5-8 on DELL U2723QE
 #   Office, both HPs    ->  1-4 on HP E27u G4 (2), 5-8 on HP E27u G4 (1)
 [workspace-to-monitor-force-assignment]
-# Home: DELL U2723QE + M27UP. Office: two identical HP E27u G4, which macOS
+# Home: M27UP (main) + DELL U2723QE. Office: two identical HP E27u G4, which macOS
 # disambiguates as (1)/(2); (2) is the main one. If they ever swap, swap them here.
 # Primary group
-1 = ['^DELL U2723QE$', '^HP E27u G4 \(2\)$', '^Built-in.*$']
-2 = ['^DELL U2723QE$', '^HP E27u G4 \(2\)$', '^Built-in.*$']
-3 = ['^DELL U2723QE$', '^HP E27u G4 \(2\)$', '^Built-in.*$']
-4 = ['^DELL U2723QE$', '^HP E27u G4 \(2\)$', '^Built-in.*$']
+1 = ['^M27UP$', '^HP E27u G4 \(2\)$', '^Built-in.*$']
+2 = ['^M27UP$', '^HP E27u G4 \(2\)$', '^Built-in.*$']
+3 = ['^M27UP$', '^HP E27u G4 \(2\)$', '^Built-in.*$']
+4 = ['^M27UP$', '^HP E27u G4 \(2\)$', '^Built-in.*$']
 
 # Secondary group
-5 = ['^M27UP$', '^HP E27u G4 \(1\)$', '^Built-in.*$']
-6 = ['^M27UP$', '^HP E27u G4 \(1\)$', '^Built-in.*$']
-7 = ['^M27UP$', '^HP E27u G4 \(1\)$', '^Built-in.*$']
-8 = ['^M27UP$', '^HP E27u G4 \(1\)$', '^Built-in.*$']
+5 = ['^DELL U2723QE$', '^HP E27u G4 \(1\)$', '^Built-in.*$']
+6 = ['^DELL U2723QE$', '^HP E27u G4 \(1\)$', '^Built-in.*$']
+7 = ['^DELL U2723QE$', '^HP E27u G4 \(1\)$', '^Built-in.*$']
+8 = ['^DELL U2723QE$', '^HP E27u G4 \(1\)$', '^Built-in.*$']

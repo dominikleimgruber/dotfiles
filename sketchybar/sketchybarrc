@@ -12,24 +12,24 @@ source "$HOME/.config/sketchybar/icons.sh"
 export FONT="SF Pro"
 export NERD_FONT="Hack Nerd Font"
 
-sketchybar --bar height=30        \
-                 blur_radius=30   \
-                 position=top     \
-                 padding_left=10  \
-                 padding_right=10 \
-                 color=$BAR_COLOR \
-                 shadow=off
+sketchybar --bar height=33 \
+  blur_radius=30 \
+  position=top \
+  padding_left=10 \
+  padding_right=10 \
+  color=$BAR_COLOR \
+  shadow=off
 
-sketchybar --default updates=when_shown                  \
-                     drawing=on                          \
-                     icon.font="$FONT:Regular:14.0"      \
-                     icon.color=$WHITE                   \
-                     label.font="$FONT:Light:14.0"       \
-                     label.color=$WHITE                  \
-                     label.padding_left=4                \
-                     label.padding_right=4               \
-                     icon.padding_left=4                 \
-                     icon.padding_right=4
+sketchybar --default updates=when_shown \
+  drawing=on \
+  icon.font="$FONT:Regular:14.0" \
+  icon.color=$WHITE \
+  label.font="$FONT:Light:14.0" \
+  label.color=$WHITE \
+  label.padding_left=4 \
+  label.padding_right=4 \
+  icon.padding_left=4 \
+  icon.padding_right=4
 
 # Left side
 source "$ITEM_DIR/apple.sh"
