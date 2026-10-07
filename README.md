@@ -12,6 +12,7 @@ Built and tested on macOS (Darwin 27) on Apple Silicon.
 | `aerospace/` | `~/.config/aerospace/` | [AeroSpace](https://github.com/nikitabobko/AeroSpace) tiling window manager — workspaces, monitor assignment, gaps, keybindings |
 | `sketchybar/` | `~/.config/sketchybar/` | [sketchybar](https://github.com/FelixKratz/SketchyBar) status bar — items, plugins, colors, icons |
 | `nvim/` | `~/.config/nvim/` | Neovim, built on [LazyVim](https://www.lazyvim.org/) (see `nvim/README.md`) |
+| `ghostty/` | `~/.config/ghostty/` | [Ghostty](https://ghostty.org) terminal — font, blur/opacity, light/dark themes, Option as Alt |
 | `starship/starship.toml` | `~/.config/starship.toml` | [Starship](https://starship.rs) shell prompt |
 | `wezterm/.wezterm.lua` | `~/.wezterm.lua` | WezTerm config, kept from before the switch to Ghostty |
 
@@ -177,7 +178,7 @@ Back up any existing configs first:
 
 ```sh
 cd ~/dotfiles
-for t in aerospace sketchybar nvim; do ln -sfn "$PWD/$t" ~/.config/$t; done
+for t in aerospace sketchybar nvim ghostty; do ln -sfn "$PWD/$t" ~/.config/$t; done
 ln -sfn "$PWD/starship/starship.toml" ~/.config/starship.toml
 ln -sfn "$PWD/wezterm/.wezterm.lua"   ~/.wezterm.lua
 
