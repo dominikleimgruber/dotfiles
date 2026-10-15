@@ -1,9 +1,10 @@
 font-size = 16
+font-family = JetBrains Mono
 background-blur-radius = 20
 background-opacity = 0.8
 mouse-hide-while-typing = true
 window-decoration = auto 
 macos-option-as-alt = true
-theme = dark:Kitty Default,light:Catppuccin Latte
+theme = dark:TokyoNight,light:Catppuccin Latte
 
 
