@@ -59,9 +59,43 @@ its name (`aerospace list-monitors`) into `[workspace-to-monitor-force-assignmen
 
 Catppuccin Macchiato bar based on
 [carbonfiber-dots](https://github.com/shahmilav/carbonfiber-dots): workspaces, front
-app, light/dark toggle, Wi-Fi, CPU, battery, weather and clock. The weather item uses
-your current location (CoreLocation, falling back to IP) and
+app, light/dark toggle, network, CPU, battery, audio, weather and clock. The weather
+item uses your current location (CoreLocation, falling back to IP) and
 [Open-Meteo](https://open-meteo.com); click it to refresh.
+
+**Audio.** The icon reflects what you are actually listening through:
+
+| Output | Icon |
+| --- | --- |
+| AirPods (matched by name) | `nf-md-earbuds` |
+| Other headphones / headsets | `nf-md-headphones` |
+| Monitor over HDMI or DisplayPort | `nf-md-monitor_speaker` |
+| Built-in, USB or virtual output | `nf-md-volume_{high,medium,low}`, following the level |
+| Muted, or volume 0 | `nf-md-volume_off`, dimmed |
+
+Device type comes from `coreaudio_device_transport` in `system_profiler
+SPAudioDataType`, since `SwitchAudioSource` reports the name but not the connection.
+AirPods and most headsets are matched on the device name, so they do not depend on the
+transport at all; an unrecognised Bluetooth device is assumed to be headphones unless
+its name looks like a speaker. The classification lives in
+`plugins/audio_device.py`.
+
+Because that lookup costs ~0.2s and `volume_change` fires rapidly while a volume key
+is held, the category is cached: volume events only read the cache, and the category is
+re-resolved on the 5s tick, on wake, and right after a device switch. So a newly
+connected device can take up to 5s to change the icon.
+
+Changing the volume briefly slides a level bar open next to the icon. Clicking the icon
+opens a popup listing every output device, with the active one highlighted; clicking one
+switches to it via `SwitchAudioSource`.
+
+**Icon fonts.** Icons come from two sources: SF Symbols private-use codepoints rendered
+by `SF Pro`, and Nerd Font glyphs (`nf-md-*`, `nf-weather-*`) rendered by
+`Hack Nerd Font`. Any item mixing both — the network item switches between an SF Symbols
+Wi-Fi glyph and a Nerd Font ethernet glyph — **must set `icon.font` on every branch**,
+or the wrong font is left applied and the glyph renders as a tofu box. A codepoint that
+exists in neither font always renders as a box; see
+[Troubleshooting](#an-icon-shows-as-a-box-tofu).
 
 Reload with `sketchybar --reload`.
 
@@ -123,6 +157,32 @@ Check with:
 ```sh
 aerospace list-windows --all --format '%{workspace} %{app-name} %{window-layout}'
 ```
+
+### An icon shows as a box (tofu)
+
+Either the codepoint exists in no installed font, or the item's `icon.font` is set to a
+font that lacks it (see **Icon fonts** above). Audit every glyph in `icons.sh` against
+both fonts:
+
+```sh
+python3 -m venv /tmp/ftenv && /tmp/ftenv/bin/pip install -q fonttools
+/tmp/ftenv/bin/python - <<'EOF'
+from fontTools.ttLib import TTFont
+import os, re
+sfpro = set(TTFont('/Library/Fonts/SF-Pro.ttf').getBestCmap())
+hack  = set(TTFont(os.path.expanduser(
+    '~/Library/Fonts/HackNerdFont-Regular.ttf')).getBestCmap())
+for line in open(os.path.expanduser('~/dotfiles/sketchybar/icons.sh')):
+    m = re.match(r'^([A-Z0-9_]+)=(\S)\s*$', line)
+    if m and ord(m.group(2)) not in sfpro | hack:
+        print('TOFU:', m.group(1), hex(ord(m.group(2))))
+EOF
+```
+
+SF Pro's symbol glyphs are named opaquely (`uni100000.medium`), so a symbol **name**
+cannot be resolved to a codepoint from the font — only presence can be checked. Nerd
+Font glyphs keep meaningful names (`md-ethernet`, `weather-day_sunny`), so prefer those
+for anything new and look the codepoint up by name rather than guessing it.
 
 ### sketchybar is not running
 

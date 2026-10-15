@@ -38,18 +38,26 @@ POPUP_OFF="sketchybar --set wifi.control popup.drawing=off"
 POPUP_CLICK_SCRIPT="sketchybar --set \$NAME popup.drawing=toggle"
 
 # When invoked as an item script (not merely sourced), refresh the icon.
+#
+# The Wi-Fi glyphs are SF Symbols and the ethernet glyph is a Nerd Font glyph, so
+# icon.font has to be set alongside the icon on every branch - otherwise whichever
+# font was set last is used for the other glyph and it renders as a tofu box.
 if [ -n "$NAME" ]; then
   IFACE="$(net_iface)"
   if [ -z "$IFACE" ]; then
-    sketchybar --set wifi.control icon="$WIFI_OFF_ICN" icon.color="$RED"
+    sketchybar --set wifi.control icon="$WIFI_OFF_ICN" \
+                                  icon.font="$FONT:Regular:14.0" icon.color="$RED"
   elif [ "$IFACE" = "en0" ]; then
     if wifi_powered; then
-      sketchybar --set wifi.control icon="$WIFI_ICN" icon.color="$WHITE"
+      sketchybar --set wifi.control icon="$WIFI_ICN" \
+                                    icon.font="$FONT:Regular:14.0" icon.color="$WHITE"
     else
-      sketchybar --set wifi.control icon="$WIFI_OFF_ICN" icon.color="$RED"
+      sketchybar --set wifi.control icon="$WIFI_OFF_ICN" \
+                                    icon.font="$FONT:Regular:14.0" icon.color="$RED"
     fi
   else
-    # Dock / Thunderbolt ethernet.
-    sketchybar --set wifi.control icon="$ETHERNET_ICN" icon.color="$WHITE"
+    # Dock / Thunderbolt / USB ethernet.
+    sketchybar --set wifi.control icon="$ETHERNET_ICN" \
+                                  icon.font="$NERD_FONT:Regular:15.0" icon.color="$WHITE"
   fi
 fi
